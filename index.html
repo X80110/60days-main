@@ -1,0 +1,84 @@
+<head>
+  <style> 
+  body { margin:0%; }
+  #3d-graph {
+    background:black;
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
+  #title{
+    position:absolute;
+    width:40%;
+    top:1%;
+    margin: auto;
+    margin-top:120px;
+    margin-left:60px;
+    font-family: "proxima nova", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    font-size:2.5em;
+    font-weight:800;
+    text-transform: uppercase;
+    text-align : left;
+    user-select: none;
+  }
+  .subtitle {
+    color:#fff;
+    max-width:400px;
+    font-size:.4em;
+    font-weight:300;
+    text-transform: capitalize;
+  }
+
+  #credits{
+    position:absolute;
+    width:100%;
+    margin: auto;
+    bottom:0;
+    margin-bottom:20px;
+    font-family: "proxima nova", Helvetica, Arial, sans-serif;
+    color:#ffffff;
+    font-size:0.7em;
+    text-transform: uppercase;
+    text-align : center;
+  }
+  #credits a {
+    color:#ffffff;
+  }
+
+  #credits .srccode {
+    color:#ffffff;
+  }
+  </style>
+
+  <script src="//unpkg.com/3d-force-graph@1.69"></script>
+<!--  <script src="../../dist/3d-force-graph.js"></script>-->
+  <title>60 days of web browsing</title>
+  <meta property="og:title" content="60 days of web browsing" />
+  <meta property="og:url" content="https://60days.vercel.app/" />
+  <meta property="og:image" content="https://github.com/X80110/60days/raw/main/60-days-web-browsing.png" />
+</head>
+
+<body>
+  <div id="3d-graph"></div>
+  <div id="title">60 days of web browsing<br/><span class="subtitle">A contemplative visualization of my daily browsing patterns between November 2020 and January 2021</span></div>
+  <div id="credits">
+    <p>get the <a class="srccode" href="https://github.com/x80110/60days"  target="blank">source code</a> | <a href="https://www.linkedin.com/in/xavier-bollo"  target="blank">about me</a> </p>
+  </div>
+  <script type="module">
+      import { UnrealBloomPass } from '//cdn.skypack.dev/three@0.136/examples/jsm/postprocessing/UnrealBloomPass.js';
+    
+    const Graph = ForceGraph3D()
+      (document.getElementById('3d-graph'))
+        .jsonUrl('../data/data.json')
+        .nodeLabel('id')
+        .nodeAutoColorBy('group');
+
+    const bloomPass = new UnrealBloomPass();
+    bloomPass.strength = 5;
+    bloomPass.radius = 0.01;
+    bloomPass.threshold = 0.1;
+    Graph.postProcessingComposer().addPass(bloomPass);
+  </script>
+</body>
